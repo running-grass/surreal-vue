@@ -28,10 +28,12 @@ async function onCreate() {
 </script>
 
 <template>
-  <el-input v-model="searchKeyword"  placeholder="请输入新的待办事项" @keypress.enter="onCreate" />
-	<div class="list">
-		<div class="item" v-for="todo in todoList" :key="todo.id">
-			{{ todo.title }}
+	<div class="w-[600px] p-4">
+
+		<el-input class="mb-2" v-model="searchKeyword" placeholder="请输入新的待办事项" @keypress.enter="onCreate" />
+		<div class="list">
+			<el-checkbox class="!flex lh-1" v-for="todo in todoList" :key="todo.id" :value="todo.done" :label="todo.title"
+				size="large" />
 		</div>
 	</div>
 </template>
