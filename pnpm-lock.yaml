@@ -5,6 +5,7 @@ specifiers:
   autoprefixer: ^10.4.13
   element-plus: ^2.2.19
   npm-run-all: ^4.1.5
+  pinia: ^2.0.23
   postcss: ^8.4.18
   surrealdb.js: ^0.5.0
   tailwindcss: ^3.2.1
@@ -16,6 +17,7 @@ specifiers:
 dependencies:
   element-plus: 2.2.19_vue@3.2.41
   npm-run-all: 4.1.5
+  pinia: 2.0.23_l7r24p6nevbtlimqmqcwa3ouhu
   surrealdb.js: 0.5.0
   vue: 3.2.41
 
@@ -217,6 +219,10 @@ packages:
     dependencies:
       '@vue/compiler-dom': 3.2.41
       '@vue/shared': 3.2.41
+
+  /@vue/devtools-api/6.4.5:
+    resolution: {integrity: sha512-JD5fcdIuFxU4fQyXUu3w2KpAJHzTVdN+p4iOX2lMWSHMOoQdMAcpFLZzm9Z/2nmsoZ1a96QEhZ26e50xLBsgOQ==}
+    dev: false
 
   /@vue/reactivity-transform/3.2.41:
     resolution: {integrity: sha512-mK5+BNMsL4hHi+IR3Ft/ho6Za+L3FA5j8WvreJ7XzHrqkPq8jtF/SMo7tuc9gHjLDwKZX1nP1JQOKo9IEAn54A==}
@@ -1263,6 +1269,24 @@ packages:
   /pify/3.0.0:
     resolution: {integrity: sha1-5aSs0sEB/fPZpNB/DbxNtJ3SgXY=}
     engines: {node: '>=4'}
+    dev: false
+
+  /pinia/2.0.23_l7r24p6nevbtlimqmqcwa3ouhu:
+    resolution: {integrity: sha512-N15hFf4o5STrxpNrib1IEb1GOArvPYf1zPvQVRGOO1G1d74Ak0J0lVyalX/SmrzdT4Q0nlEFjbURsmBmIGUR5Q==}
+    peerDependencies:
+      '@vue/composition-api': ^1.4.0
+      typescript: '>=4.4.4'
+      vue: ^2.6.14 || ^3.2.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+      typescript:
+        optional: true
+    dependencies:
+      '@vue/devtools-api': 6.4.5
+      typescript: 4.8.4
+      vue: 3.2.41
+      vue-demi: 0.13.11_vue@3.2.41
     dev: false
 
   /postcss-import/14.1.0_postcss@8.4.18:

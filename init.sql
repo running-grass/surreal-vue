@@ -1,11 +1,11 @@
 OPTION IMPORT;
 
-DEFINE SCOPE allusers SESSION 2w SIGNUP (CREATE user SET settings.marketing = $marketing, user = $user, pass = crypto::argon2::generate($pass), tags = $tags) SIGNIN (SELECT * FROM user WHERE user = $user AND crypto::argon2::compare(pass, $pass));
+DEFINE SCOPE allusers SESSION 20w SIGNUP (CREATE user SET settings.marketing = $marketing, user = $user, pass = crypto::argon2::generate($pass), tags = $tags) SIGNIN (SELECT * FROM user WHERE user = $user AND crypto::argon2::compare(pass, $pass));
 
 DEFINE TABLE user SCHEMAFULL PERMISSIONS FOR select WHERE id = $auth.id, FOR create NONE, FOR update WHERE id = $auth.id, FOR delete NONE;
 DEFINE FIELD pass ON user TYPE string;
 DEFINE FIELD settings ON user TYPE object;
-DEFINE FIELD settings.marketing ON user TYPE string;
+DEFINE FIELD settings.showDone ON user TYPE bool;
 DEFINE FIELD settings[*] ON user TYPE string;
 DEFINE FIELD tags ON user TYPE array;
 DEFINE FIELD tags[*] ON user TYPE string
