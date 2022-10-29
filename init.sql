@@ -4,6 +4,7 @@ DEFINE SCOPE allusers SESSION 2w SIGNUP (CREATE user SET settings.marketing = $m
 
 DEFINE TABLE user SCHEMAFULL PERMISSIONS FOR select WHERE id = $auth.id, FOR create NONE, FOR update WHERE id = $auth.id, FOR delete NONE;
 DEFINE FIELD pass ON user TYPE string;
+DEFINE FIELD settings ON user TYPE object;
 DEFINE FIELD settings.marketing ON user TYPE string;
 DEFINE FIELD settings[*] ON user TYPE string;
 DEFINE FIELD tags ON user TYPE array;
@@ -20,5 +21,5 @@ DEFINE FIELD done ON todo TYPE bool VALUE $value OR false;
 DEFINE INDEX idx_done ON user FIELDS done;
 
 BEGIN TRANSACTION;
-UPDATE user:grass CONTENT { id: user:grass, pass: "$argon2id$v=19$m=4096,t=3,p=1$0BExS0HckcuLAlnXj9sJ6Q$W+ozbHHjnMzu4Jk0HY/IaUjI4g6OwpP4f0ulEwyyKf4", settings: { marketing: "cn" }, tags: [], user: "grass" };
+UPDATE user:testuser CONTENT { id: user:testuser, pass: "$argon2id$v=19$m=4096,t=3,p=1$vvd5F1VNnzVN4vcgKfNgZg$g2sQCFRjZ7W/CyDV+JuE16tEbEjcDp8fGxlb6CocEAs", settings: { marketing: "cn" }, tags: [], user: "testuser" };
 COMMIT TRANSACTION;
