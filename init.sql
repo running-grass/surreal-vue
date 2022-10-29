@@ -5,10 +5,8 @@ DEFINE SCOPE allusers SESSION 20w SIGNUP (CREATE user SET settings.marketing = $
 DEFINE TABLE user SCHEMAFULL PERMISSIONS FOR select WHERE id = $auth.id, FOR create NONE, FOR update WHERE id = $auth.id, FOR delete NONE;
 DEFINE FIELD pass ON user TYPE string;
 DEFINE FIELD settings ON user TYPE object;
-DEFINE FIELD settings.showDone ON user TYPE bool;
+DEFINE FIELD settings.showDone ON user TYPE bool VALUE $value OR true;
 DEFINE FIELD settings[*] ON user TYPE string;
-DEFINE FIELD tags ON user TYPE array;
-DEFINE FIELD tags[*] ON user TYPE string
 DEFINE FIELD user ON user TYPE string;
 DEFINE INDEX idx_user ON user FIELDS user UNIQUE;
 

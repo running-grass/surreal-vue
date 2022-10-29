@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ElInput, ElCheckbox } from 'element-plus';
+import { ElInput, ElCheckbox, ElButton } from 'element-plus';
 import { computed, ref } from 'vue';
 import { db, Todo, useUserStore, User } from '../utils/db';
 
-const { user, refreshUserInfo } = await useUserStore()
+const { user, refreshUserInfo, logout } = useUserStore()
 
 async function fetchTodos() {
 	return await db.select<Todo>('todo');
@@ -66,7 +66,9 @@ async function changeShowDone(showDone: any) {
 <template>
 	<div class="w-[600px] p-4">
 		<div>
-			{{ user?.user }}
+			{{ user.user }} 
+
+			<ElButton class="ml-4" @click="logout">退出</ElButton>
 		</div>
 		<div class="flex">
 			<ElCheckbox label="显示已完成" v-model="showDone" @change="changeShowDone" />
