@@ -6,14 +6,16 @@
   "scripts": {
     "dev": "run-p startdb startVite",
     "build": "vue-tsc && vite build",
-    "startdb": "surreal start --log debug --user root --pass root memory",
-    "initdb": "cat init.sql | surreal sql --conn http://localhost:8000 --user root --pass root --ns test --db test",
+    "startdb": "surreal start --log debug --user root --pass root --bind 0.0.0.0:33060 -- file:db.local",
+    "initdb": "surreal import --conn http://localhost:33060 --user root --pass root --ns test --db test init.sql",
     "startVite": "vite",
     "startAndInitDB": "run-p startdb initdb",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.0.10",
     "element-plus": "^2.2.19",
+    "nanoid": "^4.0.0",
     "npm-run-all": "^4.1.5",
     "pinia": "^2.0.23",
     "surrealdb.js": "^0.5.0",

@@ -1,33 +1,44 @@
 import Surreal from 'surrealdb.js';
 import { defineStore } from 'pinia'
-import { computed, isRef, ref } from 'vue';
+import { computed, ref } from 'vue';
 
 const TOKEN_KEY = 'surreal_token';
 
+export const db = new Surreal( location.origin + '/rpc');
+
+// window.__db = db;
+
 
 async function initDB() {
-	const db = new Surreal('http://127.0.0.1:8000/rpc');
 	// 等待连接成功
 	await db.wait()
 	await db.use('test', 'test');
 	return db;
-
 }
 
-export const db = await initDB();
+export const initDBWating = initDB();	
 
 
 // 获取初始状态下的用户信息
 async function getUserInfo() {
-	const [_user] = await db.select<User>('user');
+	const _user : User = await db.info() //<User>('user');
 	return _user || null;
 }
 
 export const useUserStore = defineStore('user', () => {
-	const user = ref<User | null>(null);
+	const mock = {
+		id: "unlogin",
+		pass: "mock",
+		user: 'mock',
+		settings: {
+			showDone: true,
+		},
+	};
+
+	const user = ref<User>(mock);
 
 	const isLogin = computed(() => {
-		return user.value !== null
+		return user.value.id !== 'unlogin';
 	})
 	// 刷新登录信息
 	const refreshUserInfo = async () => {
@@ -49,9 +60,9 @@ export const useUserStore = defineStore('user', () => {
 		})
 	}
 
-	const logout = () => {
+	const logout = async () => {
 		db.close()
-		user.value = null
+		user.value = mock
 		localStorage.removeItem(TOKEN_KEY)
 
 		location.reload()

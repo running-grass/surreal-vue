@@ -1,13 +1,30 @@
 <!DOCTYPE html>
-<html lang="en" class="w-full h-full">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + Vue + TS</title>
-  </head>
-  <body class="w-full h-full">
-    <div id="app" class="w-full h-full"></div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+<html lang="en" class="full-screen">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Surreal Todo Demo</title>
+  <style>
+    .full-screen {
+      width: 100%;
+      height: 100%;
+    }
+
+    .app-loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+</head>
+
+<body class="full-screen">
+  <div id="app" class="full-screen">
+    <section class="full-screen app-loading">应用启动中……</section>
+  </div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
 </html>

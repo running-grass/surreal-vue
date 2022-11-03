@@ -6,7 +6,7 @@ import './style.css'
 import 'element-plus/dist/index.css'
 
 import AppContainer from './AppContainer.vue'
-import { useUserStore } from './utils/db'
+import { initDBWating, useUserStore } from './utils/db'
 const app = createApp(AppContainer)
 const pinia = createPinia()
 
@@ -15,8 +15,14 @@ app.use(ElementPlus)
 
 
 const userStore = useUserStore()
-await userStore.tryAutoLogin()
+
+initDBWating.then(async () => {
+  await userStore.tryAutoLogin()
+
+
 router.beforeEach((to, from) => {
+  console.log('before', userStore.isLogin, to)
+
   // 未登录
   if (userStore.isLogin) {
     if (to.path === '/login') {
@@ -27,9 +33,9 @@ router.beforeEach((to, from) => {
       return '/login'
     }
   }
-
-
 })
-
 app.use(router)
-app.mount('#app')
+
+  console.log('mount app')
+  app.mount('#app')
+})

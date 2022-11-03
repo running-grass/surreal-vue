@@ -9,7 +9,7 @@ import HomeVue from './views/Home.vue';
 		<RouterView />
 		<!-- 在 #fallback 插槽中显示 “正在加载中” -->
 		<template #fallback>
-			正在加载中...
+			页面正在加载中...
 		</template>
 	</Suspense>
 </template>
