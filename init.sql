@@ -25,10 +25,12 @@ DEFINE TABLE todo SCHEMAFULL
 DEFINE FIELD desc ON todo TYPE string VALUE $value OR "";
 DEFINE FIELD done ON todo TYPE bool VALUE $value == true OR false;
 DEFINE FIELD title ON todo TYPE string VALUE $value OR "";
+DEFINE FIELD dueTime ON todo TYPE datetime;
 DEFINE FIELD uid ON todo TYPE record(user) VALUE $auth.id ASSERT $value != NONE;
 
 DEFINE INDEX idx_done ON todo FIELDS done;
 DEFINE INDEX idx_uid ON todo FIELDS uid;
+DEFINE INDEX idx_due_time ON todo FIELDS dueTime;
 
 -- ------------------------------
 -- TABLE: user

@@ -111,7 +111,8 @@ export type Todo = {
 	id: string,
 	title: string,
 	desc: string,
-	done: boolean
+	done: boolean,
+	dueTime?: string,
 }
 
 export type User = {

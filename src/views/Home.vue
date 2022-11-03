@@ -63,30 +63,72 @@ async function changeShowDone(showDone: any) {
 	refreshUserInfo();
 }
 
+// 更改时间
+
+
+const shortcuts = [
+	{
+		text: 'Today',
+		value: new Date(),
+	},
+	{
+		text: 'Yesterday',
+		value: () => {
+			const date = new Date()
+			date.setTime(date.getTime() - 3600 * 1000 * 24)
+			return date
+		},
+	},
+	{
+		text: 'A week ago',
+		value: () => {
+			const date = new Date()
+			date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
+			return date
+		},
+	},
+]
+
+async function changeDue(todo: Todo, d: string) {
+	await db.change(todo.id, {
+		dueTime: d
+	});
+
+	console.log((d));
+}
+
+
 // 删除todo
 async function deleteTodo(todo: Todo) {
 	await db.query(`delete ${todo.id}`);
 	refreshTodos();
 }
+
+
 </script>
 
 <template>
-	<div class="w-[600px] p-4">
-		<div>
-			{{ user.user }}
-			<ElButton class="ml-4" @click="logout">退出</ElButton>
-		</div>
-		<div class="flex">
-			<ElCheckbox label="显示已完成" v-model="showDone" @change="changeShowDone" />
-		</div>
-		<el-input class="mb-2" v-model="newTodo" placeholder="请输入新的待办事项" @keypress.enter="onCreate" />
-		<ol class="list">
-			<li class="hover:bg-gray-100 flex items-center" v-for="todo in filteredTodoList" :key="todo.id">
-				<el-checkbox class="!flex lh-1 flex-1" v-model="todo.done" :label="todo.title" size="large"
-					@change="done => onDone(done, todo)" />
-				<el-button class="!text-base !w-6 !h-6" type="danger" :icon="Delete" circle @click="() => deleteTodo(todo)" />
-			</li>
+	<div class="w-full">
 
-		</ol>
+		<div class="w-[600px] p-4">
+			<div>
+				{{ user.user }}
+				<ElButton class="ml-4" @click="logout">退出</ElButton>
+			</div>
+			<div class="flex">
+				<ElCheckbox label="显示已完成" v-model="showDone" @change="changeShowDone" />
+			</div>
+			<el-input class="mb-2" v-model="newTodo" placeholder="请输入新的待办事项" @keypress.enter="onCreate" />
+			<ol class="list">
+				<li class="hover:bg-gray-100 flex items-center" v-for="todo in filteredTodoList" :key="todo.id">
+					<el-checkbox class="!mr-2" v-model="todo.done" size="large" @change="done => onDone(done, todo)" />
+					<el-date-picker v-model="todo.dueTime" value-format="YYYY-MM-DDTHH:mm:ssZ[Z]" type="datetime"
+						@change="(d: string) => changeDue(todo, d)" placeholder="Select date and time" :shortcuts="shortcuts" />
+					<div class="flex-1">{{ todo.title }}</div>
+					<el-button class="!text-base !w-6 !h-6" type="danger" :icon="Delete" circle @click="() => deleteTodo(todo)" />
+				</li>
+
+			</ol>
+		</div>
 	</div>
 </template>
