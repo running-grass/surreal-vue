@@ -18,10 +18,9 @@ async function initDB() {
 
 export const initDBWating = initDB();	
 
-
 // 获取初始状态下的用户信息
 async function getUserInfo() {
-	const _user : User = await db.info() //<User>('user');
+	const [_user] = await db.select<User>('user');
 	return _user || null;
 }
 
@@ -112,7 +111,11 @@ export type Todo = {
 	title: string,
 	desc: string,
 	done: boolean,
-	dueTime?: string,
+	deadline?: string,
+	schedule?: {
+		start?: string,
+		end?: string,
+	}
 }
 
 export type User = {
@@ -120,6 +123,6 @@ export type User = {
 	user: string,
 	pass: string,
 	settings: {
-		showDone: boolean,
+		showDone?: boolean,
 	},
 }

@@ -14,7 +14,7 @@ services:
     image: surrealdb/surrealdb:nightly
     restart: always
     ports:
-      - 8000:8000
+      - 33060:8000
     volumes:
       - db-data:/data
     environment:

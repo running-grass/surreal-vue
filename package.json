@@ -4,10 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "run-p startdb startVite",
+    "dev": "run-p startVite",
     "build": "vue-tsc && vite build",
-    "startdb": "surreal start --log debug --user root --pass root --bind 0.0.0.0:33060 -- file:db.local",
-    "initdb": "surreal import --conn http://localhost:33060 --user root --pass root --ns test --db test init.sql",
+    "startdb": "docker run --rm -v:db.local:/data -p '33060:33060' surrealdb/surrealdb:nightly start --log debug --user root --pass root --bind 0.0.0.0:33060 -- file:/data",
+    "initdb": "docker run --rm surreal import --conn http://localhost:33060 --user root --pass root --ns test --db test init.sql",
     "startVite": "vite",
     "startAndInitDB": "run-p startdb initdb",
     "preview": "vite preview"

@@ -16,21 +16,20 @@ DEFINE SCOPE allusers SESSION 20w SIGNUP (CREATE user SET settings.marketing = $
 
 DEFINE TABLE todo SCHEMAFULL 
   PERMISSIONS 
-    FOR select WHERE uid = $auth.id, 
-    FOR create WHERE uid = $auth.id, 
-    FOR update WHERE uid = $auth.id, 
-    FOR delete  WHERE uid = $auth.id;
-    -- FOR delete FULL;
+    FOR select, create, update, delete WHERE uid = $auth.id;
 
+DEFINE FIELD uid ON todo TYPE record(user) VALUE $auth.id ASSERT $value != NONE;
 DEFINE FIELD desc ON todo TYPE string VALUE $value OR "";
 DEFINE FIELD done ON todo TYPE bool VALUE $value == true OR false;
 DEFINE FIELD title ON todo TYPE string VALUE $value OR "";
-DEFINE FIELD dueTime ON todo TYPE datetime;
-DEFINE FIELD uid ON todo TYPE record(user) VALUE $auth.id ASSERT $value != NONE;
+
+DEFINE FIELD deadline ON todo TYPE datetime;
+DEFINE FIELD schedule.start ON todo TYPE datetime;
+DEFINE FIELD schedule.end ON todo TYPE datetime;
+
 
 DEFINE INDEX idx_done ON todo FIELDS done;
 DEFINE INDEX idx_uid ON todo FIELDS uid;
-DEFINE INDEX idx_due_time ON todo FIELDS dueTime;
 
 -- ------------------------------
 -- TABLE: user
@@ -38,10 +37,8 @@ DEFINE INDEX idx_due_time ON todo FIELDS dueTime;
 
 DEFINE TABLE user SCHEMAFULL 
   PERMISSIONS 
-    FOR select WHERE id = $auth.id, 
-    FOR create NONE, 
-    FOR update WHERE id = $auth.id, 
-    FOR delete NONE;
+    FOR select, update WHERE id = $auth.id, 
+    FOR create, delete NONE;
 
 DEFINE FIELD pass ON user TYPE string;
 DEFINE FIELD settings ON user TYPE object VALUE $value OR {};
