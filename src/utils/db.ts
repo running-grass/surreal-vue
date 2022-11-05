@@ -112,6 +112,14 @@ export type Todo = {
 	desc: string,
 	done: boolean,
 	deadline?: string,
+	/**
+	 * 优先级
+	 * 
+	 * undefined 为无优先级  
+	 * 1 为低优先级  
+	 * 2 为高优先级
+	 */
+	priority?: 1 | 2,
 	schedule?: {
 		start?: string,
 		end?: string,

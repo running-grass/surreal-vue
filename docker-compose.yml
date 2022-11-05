@@ -5,6 +5,7 @@ services:
       - 33080:80
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./init.sql:/scripts/init.sql
     environment:
       DB_USER: root
       DB_PASS: root

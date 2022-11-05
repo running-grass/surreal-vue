@@ -20,21 +20,21 @@ initDBWating.then(async () => {
   await userStore.tryAutoLogin()
 
 
-router.beforeEach((to, from) => {
-  console.log('before', userStore.isLogin, to)
+  router.beforeEach((to, from) => {
+    console.log('before', userStore.isLogin, to)
 
-  // 未登录
-  if (userStore.isLogin) {
-    if (to.path === '/login') {
-      return '/'
+    // 未登录
+    if (userStore.isLogin) {
+      if (to.path === '/login') {
+        return '/'
+      }
+    } else {
+      if (to.path !== '/login') {
+        return '/login'
+      }
     }
-  } else {
-    if (to.path !== '/login') {
-      return '/login'
-    }
-  }
-})
-app.use(router)
+  })
+  app.use(router)
 
   console.log('mount app')
   app.mount('#app')
